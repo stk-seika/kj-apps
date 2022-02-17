@@ -1,0 +1,41 @@
+{% extends 'mysite/base.html' %}
+
+{% block header-head %}
+<title>制作物置き場</title>
+<!-- <meta name="description" content="制作物一覧です"> -->
+<meta name="keywords" content="機械学習">
+{% endblock %}
+
+{% block header-tail %}
+{% endblock %}
+
+{% block content %}
+<!----- main ----->
+<article>
+<section>
+<h1>一覧</h1>
+<ul>
+    <li>
+        <a href="/classifier">識別器</a>
+        <p>
+        作成した識別器です。
+        数字の画像をアップロードするとどの数字なのか識別します。
+        </p>
+    </li>
+    <li>
+        <a href="/polls">polls</a>
+        <p>
+        Django の公式チュートリアルで作成した投票アプリです。
+        </p>
+    </li>
+    <li>
+        <a href="/blog">Django Tutorial Blog</a>
+        <p>
+        Django girls のチュートリアルで作成したブログアプリです。
+        </p>
+    </li>
+</ul>
+</section>
+</article>
+<!----- /main ----->
+{% endblock %}

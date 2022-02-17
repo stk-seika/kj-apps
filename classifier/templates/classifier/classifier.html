@@ -1,0 +1,72 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+
+{% block header-head %}
+<title>識別器</title>
+<meta name="description" content="アップロードされた画像を識別する">
+<meta name="keywords" content="機械学習, 識別器">
+{% endblock %}
+
+{% block header-tail %}
+<link rel="stylesheet" href="{% static 'classifier/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<article>
+<section>
+    <h1>
+        見出し
+    </h1>
+    <p>
+    数字の画像をアップロードするとどの数字なのか識別します。
+    <a href="/blog/post/12/">(詳細)</a>
+    <br>
+    50MB以下のファイルのみ受け付けます。
+    </p>
+    
+{% if not done %}
+    <table>
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <tr>
+            <td></td><td><input type="submit" value="実行する" /></td>
+        </tr>
+        </form>
+    </table>
+    {% if alert %}
+    <div class="alert alert-danger" role="alert">
+        <p>{{ alert }}</p>
+    </div>
+    {% endif %}
+{% else %}
+<p><img src="data:image/png;base64,{{ image | safe }}" class="img-fluid"></p>
+<!-- <img src="data:image/png;base64,{{ chart | safe }}"> -->
+<div class="table-responsive">
+    <table style="max-width: 400px;" class="table table-light table-striped table-hover caption-top">
+        <!-- <caption>Result</caption> -->
+        <thead class="table-light">
+        <tr>
+        <!-- <tr style="border-bottom: solid thin"> -->
+            <th>Name</th>
+            <th>Score(0~1)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, value in pred.items %}
+        <!-- <tr style="border: solid thin"> -->
+        <tr>
+            <td>{{ key }}</td>
+            <td class="w-25">{{ value |floatformat:3}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<p>
+    <a href="" class="btn btn-primary">もう一度する</a>
+</p>
+{% endif %}
+</article>
+</section>
+{% endblock %}

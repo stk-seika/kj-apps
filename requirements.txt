@@ -1,0 +1,13 @@
+asgiref==3.5.0
+backports.zoneinfo==0.2.1
+Django==4.0.2
+gunicorn==20.1.0
+numpy==1.22.2
+Pillow==9.0.1
+sqlparse==0.4.2
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==1.10.2+cpu
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torchvision==0.11.3+cpu
+typing-extensions==4.1.1
+whitenoise==6.0.0
