@@ -13,7 +13,7 @@
 **/db.sqlite3
 #**/static
 
-secret_key.txt
+# secret_key.txt
 
 # apps
 !classifier/static/classifier/model/model.pth
