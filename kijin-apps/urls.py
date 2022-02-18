@@ -20,7 +20,7 @@ from django.urls.conf import include
 from . import index
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('', index.index, name="index"),
     path('classifier/', include('classifier.urls')),
 ]
