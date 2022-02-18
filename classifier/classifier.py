@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
 import torch
 import torchvision
 from torchvision import transforms
@@ -11,8 +10,8 @@ from . import fill_image
 def init_model():
     # モデルpath
     # model_path = staticfiles_storage.url('classifier/model/model.pth')
-    # model_path = settings.STATIC_URL + 'classifier/model/model.pth'
-    model_path = 'classifier/static/classifier/model/model.pth' # テスト時
+    # model_path = 'classifier/static/classifier/model/model.pth' # テスト時
+    model_path = settings.STATIC_ROOT + 'classifier/model/model.pth' # デプロイ時
     # デバイス
     # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # クラス数
