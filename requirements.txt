@@ -5,6 +5,7 @@ Django==4.0.2
 gunicorn==20.1.0
 numpy==1.22.2
 Pillow==9.0.1
+psycopg2==2.9.3
 sqlparse==0.4.2
 --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
 torch==1.10.2+cpu
