@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from django.conf import settings
 from django import http
+from django.conf import settings
 import json
 import io
 import base64
