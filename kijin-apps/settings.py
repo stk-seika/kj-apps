@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(e9oejnxj+3hn)+-pqhb^p@wgoszt7*-8k@&#hz*2)b#4my!5l'
+# SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -143,9 +143,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Apply local settings or django-heroku
 try:
@@ -153,6 +153,10 @@ try:
 except ImportError:
     pass
 if not DEBUG:
-    pass
+    # SECRET_KEY
+    with open('/etc/secret_key.txt') as f:
+        SECRET_KEY = f.read().strip()
+    
     # import django_heroku
     # django_heroku.settings(locals())
+    

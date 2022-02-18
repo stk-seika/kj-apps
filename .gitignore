@@ -13,9 +13,10 @@
 **/db.sqlite3
 #**/static
 
+secret_key.txt
+
 # apps
 !classifier/static/classifier/model/model.pth
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
