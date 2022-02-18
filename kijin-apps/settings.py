@@ -154,7 +154,7 @@ except ImportError:
     pass
 if not DEBUG:
     # SECRET_KEY
-    with open('/etc/secret_key.txt') as f:
+    with open('./secret_key.txt') as f:
         SECRET_KEY = f.read().strip()
     
     # import django_heroku
