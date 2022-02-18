@@ -23,6 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = ''
+# SECRET_KEY
+with open('./kijin-apps/secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -153,10 +156,6 @@ try:
 except ImportError:
     pass
 if not DEBUG:
-    # SECRET_KEY
-    with open('./secret_key.txt') as f:
-        SECRET_KEY = f.read().strip()
-    
-    # import django_heroku
-    # django_heroku.settings(locals())
-    
+    import django_heroku
+    django_heroku.settings(locals())
+    # pass
