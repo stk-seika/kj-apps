@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kjin-apps.wsgi.application'
+WSGI_APPLICATION = 'kijin-apps.wsgi.application'
 
 
 # Database
