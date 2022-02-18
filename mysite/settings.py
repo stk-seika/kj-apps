@@ -86,11 +86,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'kijin-apps',
-        'USER': 'name',
+        'USER': 'user',
         'PASSWORD': '',
-        'HOST': 'localhost',
+        'HOST': 'host',
         'PORT': '',
     }
 }
@@ -146,6 +147,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 
-# if not DEBUG:
-#     import django_heroku
-#     django_heroku.settings(locals())
+# Apply local settings or django-heroku
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
