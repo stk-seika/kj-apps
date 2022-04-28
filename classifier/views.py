@@ -32,8 +32,19 @@ class ClassifierView(generic.TemplateView):
 	# label to name
 	# label ID から名前を返す
 	def label_to_name(self, labels, chara_table):
-		# リストの場合
-		if type(labels) == list or type(labels) == tuple:
+		# intかstrのとき
+		if type(labels) == int or type(labels) == str:
+			name = ""
+			try:
+				for k, v in chara_table.items():
+					if v['id'] == int(labels):
+						name = k
+						break
+			except ValueError:
+				pass
+			return name
+		# str以外のイテラブルの場合
+		elif hasattr(labels, '__iter__'):
 			names = []
 			for label in labels:
 				hit = False
@@ -49,17 +60,6 @@ class ClassifierView(generic.TemplateView):
 				except ValueError:
 					names.append("")
 			return names
-		# intかstrのとき
-		elif type(labels) == int or type(labels) == str:
-			name = ""
-			try:
-				for k, v in chara_table.items():
-					if v['id'] == int(labels):
-						name = k
-						break
-			except ValueError:
-				pass
-			return name
 		# その他のとき
 		else:
 			return ""

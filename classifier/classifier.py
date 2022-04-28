@@ -25,7 +25,7 @@ def init_model():
     # model = model.to(device)
 
     # 保存したモデルパラメータの読み込み
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location='cpu'))
     model.eval()
     
     return model
