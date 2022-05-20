@@ -23,4 +23,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', index.index, name="index"),
     path('classifier/', include('classifier.urls')),
+    path('th_pixiv_network/', include('th_pixiv_network.urls')),
 ]
