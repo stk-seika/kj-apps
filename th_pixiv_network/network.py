@@ -11,6 +11,9 @@ class Network():
         self.width = width
         self.threshold = 0.1
 
+        # ノード名称テーブル読み込み
+        self.chara_table = self.__load_chara_table()
+
         # ノード定義
         self.nodes = [dict() for i in range(len(self.weights))]
         # ノード初期化
@@ -21,10 +24,19 @@ class Network():
         # エッジ初期化
         self.init_edges(self.weights)
 
+    # ノード名称テーブル読み込み
+    def __load_chara_table(self):
+        table_file = 'th_pixiv_network/static/th_pixiv_network/chara_table.json'
+        # table_file = settings.STATIC_ROOT + '/th_pixiv_network/chara_table.json'
+        chara_table = dict()
+        with open(table_file, "r") as f:
+            chara_table = json.load(f)
+        return chara_table
+
     # ラベルファイル読み込み
     def __load_labels(self):
-        label_path = settings.STATIC_ROOT + '/th_pixiv_network/labels.json'
-        # label_path = './data/labels.json'
+        # label_path = settings.STATIC_ROOT + '/th_pixiv_network/labels.json'
+        label_path = 'static/th_pixiv_network/labels.json'
 
         labels = dict()
         with open(label_path, 'r') as f:
@@ -71,12 +83,47 @@ class Network():
         for i, node in enumerate(self.nodes):
             node['id'] = i+1
             node['label'] = i+1
-            # node['title'] = str(self.label_to_name(node['label']))
+            node['title'] = str(self.label_to_name(node['label']))
             node['title'] = str(node['label'])
             node['shape'] = 'image'
             node['image'] = settings.STATIC_ROOT + f'/th_pixiv_network/image/node_{i+1}.gif'
             node['borderWidth'] = 0     # 透過画像なので境界のマージンをなくす
         return 
+
+    # label to name
+	# label ID から名前を返す
+    def label_to_name(self, labels):
+        # intかstrのとき
+        if type(labels) == int or type(labels) == str:
+            name = ""
+            try:
+                for k, v in self.chara_table.items():
+                    if v['id'] == int(labels):
+                        name = k
+                        break
+            except ValueError:
+                pass
+            return name
+        # str以外のイテラブルの場合
+        elif hasattr(labels, '__iter__'):
+            names = []
+            for label in labels:
+                hit = False
+                try:
+                    for k, v in self.chara_table.items():
+                        if v['id'] == int(label):
+                            names.append(k)
+                            hit = True
+                            break
+                    if not hit:
+                        names.append("")
+                # int()でintに変換出来ないとき
+                except ValueError:
+                    names.append("")
+            return names
+        # その他のとき
+        else:
+            return ""
 
     # 表示するノードの設定
     def set_visible_node(self, node_idx):
@@ -125,8 +172,3 @@ class Network():
                 edge['physics'] = True
 
         return
-
-    # # 描画
-    # def draw(self):
-    #     self.net.repulsion()
-    #     self.net.show('test.html')

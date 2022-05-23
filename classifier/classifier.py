@@ -9,7 +9,7 @@ from . import fill_image
 
 def init_model():
     # モデルpath
-    # model_path = staticfiles_storage.url('classifier/model/model.pth')
+    # model_path =.url('classifier/model/model.pth')
     # model_path = 'classifier/static/classifier/model/model.pth' # テスト時
     model_path = settings.STATIC_ROOT + '/classifier/model/model.pth' # デプロイ時
     # デバイス
@@ -32,7 +32,7 @@ def init_model():
     
 # 予測
 def pred(image_path, model=None):
-    if model == None:
+    if model is None:
         model = init_model()
 
     image_PIL = Image.open(image_path).convert('RGB')
