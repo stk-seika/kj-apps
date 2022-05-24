@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block header-head %}
-<title>東方キャラクターネットワーク図</title>
+<!-- <title>東方キャラクターネットワーク図</title> -->
+<title>ネットワーク図</title>
 <meta name="description" content="東方Projectのpixiv上のキャラクターを相関図">
 <!-- <meta name="keywords"> -->
 {% endblock %}
@@ -16,36 +17,36 @@
 <article>
 <section>
     <h1>
-        東方キャラクターネットワーク図
+        <!-- 東方Projectキャラクターネットワーク図 -->
+        ネットワーク図
     </h1>
     <p>
-        pixiv上の東方Projectのキャラクターが二人以上描かれたイラストをネットワークとして描画します。
+        <!-- pixiv上の東方Projectのキャラクターが二人以上描かれたイラストをネットワークとして描画します。 -->
+        ネットワークとして描画します。
         <!-- <a href="">(詳細)</a> -->
         <br>
         例
         <br>
     </p>
 
+    <div id="th-pxv-network"></div>
     <script type="text/javascript">
         // create an array with nodes
-        var n = `{{ nodes|safe }}`
-        var nodes = new vis.DataSet(n);
-    
+        var nodes_vis = new vis.DataSet({{ nodes|safe }});
         // create an array with edges
-        var e = `{{ edges|safe }}`
-        var edges = new vis.DataSet(e);
+        var edges_vis = new vis.DataSet({{ edges|safe }});
     
         // create a network
         var container = document.getElementById('th-pxv-network');
     
         // provide the data in the vis format
         var data = {
-            nodes: nodes,
-            edges: edges
+            nodes: nodes_vis,
+            edges: edges_vis
         };
         var options = {};
     
-        // initialize your network!
+        // initialize network
         var network = new vis.Network(container, data, options);
     </script>
 </section>

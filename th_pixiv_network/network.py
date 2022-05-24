@@ -24,9 +24,11 @@ class Network():
         # エッジ初期化
         self.init_edges(self.weights)
 
+        return
+
     # ノード名称テーブル読み込み
     def __load_chara_table(self):
-        table_file = 'th_pixiv_network/static/th_pixiv_network/chara_table.json'
+        table_file = 'static/th_pixiv_network/chara_table.json'
         # table_file = settings.STATIC_ROOT + '/th_pixiv_network/chara_table.json'
         chara_table = dict()
         with open(table_file, "r") as f:
@@ -82,11 +84,11 @@ class Network():
         # ノードを画像に
         for i, node in enumerate(self.nodes):
             node['id'] = i+1
-            node['label'] = i+1
-            node['title'] = str(self.label_to_name(node['label']))
-            node['title'] = str(node['label'])
-            node['shape'] = 'image'
-            node['image'] = settings.STATIC_ROOT + f'/th_pixiv_network/image/node_{i+1}.gif'
+            node['label'] = str(i+1)
+            node['title'] = str(self.label_to_name(i+1))
+            # node['title'] = node['label'] 
+            # # node['shape'] = 'image'
+            # # node['image'] = settings.STATIC_ROOT + f'/th_pixiv_network/image/node_{i+1}.gif'
             node['borderWidth'] = 0     # 透過画像なので境界のマージンをなくす
         return 
 
@@ -144,18 +146,20 @@ class Network():
         weighted_edges = []
         for l, chara in enumerate(weights):
             for c, weight in enumerate(chara):
-                weighted_edges.append((l, c, weight))
+                weighted_edges.append((l+1, c+1, weight))
         
         for i, edge in enumerate(self.edges):
-            edge['id'] = i
+            # edge['id'] = i
             edge['from'] = weighted_edges[i][0]
             edge['to'] = weighted_edges[i][1]
             edge['width'] = weighted_edges[i][2]
-            edge['arrowStrikethrough'] = False
-            edge['title'] = edge['width']
+            # edge['arrowStrikethrough'] = False
+            edge['title'] = str(edge['width'])
 
         # エッジの閾値設定
         self.set_threshold(self.threshold)
+
+        return 
 
     # 表示するエッジの閾値を設定
     def set_threshold(self, threshold):
