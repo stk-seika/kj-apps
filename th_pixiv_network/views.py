@@ -20,8 +20,12 @@ class NetworkView(generic.TemplateView):
 		# context['image'] = None
 		# context['alert'] = None
 		self.network = Network()
-		context['nodes'] = self.network.nodes
-		context['edges'] = self.network.edges
+		import json
+ 
+		# context['nodes'] = self.network.nodes
+		# context['edges'] = self.network.edges
+		context['nodes']  = json.dumps(self.network.nodes)
+		context['edges'] = json.dumps(self.network.edges)
 
 		return context
 

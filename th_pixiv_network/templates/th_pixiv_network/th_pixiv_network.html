@@ -23,11 +23,74 @@
     <p>
         <!-- pixiv上の東方Projectのキャラクターが二人以上描かれたイラストをネットワークとして描画します。 -->
         ネットワークとして描画します。
+        <br>
+        最初の表示に時間が掛かる場合があります。
         <!-- <a href="">(詳細)</a> -->
         <br>
         例
         <br>
     </p>
+
+    <div style="background-color:#CCC; padding : 30px 50px;">
+        <label for="customRange3" class="form-label">辺の表示閾値(0.01-1.0)<br>低くすると表示する辺(矢印)の数が増えますが、処理が重くなります</label>
+        <input type="range" class="form-range" min="0.00" max="2.0" step="0.01" id="customRange">
+        <!-- <input type="range" id="range" min="0.00" max="2.0" step="0.1" value="1.0"> -->
+        <span id="value">0.1</span>
+        <script type="text/javascript">
+            var elem = document.getElementById('customRange');
+            var target = document.getElementById('value');
+            var rangeValue = function (elem, target) {
+            return function(evt){
+                var val = elem.value;
+                target.innerHTML = 10**val /100
+            }
+            }
+            elem.addEventListener('input', rangeValue(elem, target));
+        </script>
+    </div>
+
+<!-- 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script><br />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css">
+    
+    <script type="text/javascript">
+        jQuery(function($){
+          $("#slider").slider({
+            max:1, //最大値
+            min: 0.01, //最小値
+            value: 0.1, //初期値
+            step: 0.01, //幅
+          });
+        });
+        </script>
+            <div id="slider"></div>
+            <div id="slidervalue"></div>
+     -->
+<!-- 
+        <input type="range" id="example" min="1" max="10" step="1">
+        <script type="text/javascript">
+            const inputElem = document.getElementById('example'); // input要素
+            const currentValueElem = document.getElementById('current-value'); // 埋め込む先のspan要素
+
+            // 現在の値をspanに埋め込む関数
+            const setCurrentValue = (val) => {
+            currentValueElem.innerText = val;
+            }
+
+            // inputイベント時に値をセットする関数
+            const rangeOnChange = (e) =>{
+            setCurrentValue(e.target.value);
+            }
+
+            window.onload = () => {
+            inputElem.addEventListener('input', rangeOnChange); // スライダー変化時にイベントを発火
+            setCurrentValue(inputElem.value); // ページ読み込み時に値をセット
+            }
+        </script></p>
+        <p>現在の値は<span id="current-value"></span>です</p>
+    -->
+
 
     <div id="th-pxv-network"></div>
     <script type="text/javascript">
@@ -35,16 +98,16 @@
         var nodes_vis = new vis.DataSet({{ nodes|safe }});
         // create an array with edges
         var edges_vis = new vis.DataSet({{ edges|safe }});
-    
+
         // create a network
         var container = document.getElementById('th-pxv-network');
-    
+        
         // provide the data in the vis format
         var data = {
             nodes: nodes_vis,
             edges: edges_vis
         };
-        var options = {};
+        var options = {solver: "repulsion"};
     
         // initialize network
         var network = new vis.Network(container, data, options);
