@@ -31,7 +31,8 @@
         <br>
     </p>
 
-    <div style="background-color:#CCC; padding : 30px 50px;">
+    <p>
+        <div style="background-color:#CCC; padding : 30px 50px;">
         <label for="customRange3" class="form-label">辺の表示閾値(0.01-1.0)<br>低くすると表示する辺(矢印)の数が増えますが、処理が重くなります</label>
         <input type="range" class="form-range" min="0.00" max="2.0" step="0.01" id="customRange">
         <!-- <input type="range" id="range" min="0.00" max="2.0" step="0.1" value="1.0"> -->
@@ -47,7 +48,8 @@
             }
             elem.addEventListener('input', rangeValue(elem, target));
         </script>
-    </div>
+        </div>
+    </p>
 
 <!-- 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script><br />
@@ -91,8 +93,9 @@
         <p>現在の値は<span id="current-value"></span>です</p>
     -->
 
-
     <div id="th-pxv-network"></div>
+    <div id="config"></div>
+
     <script type="text/javascript">
         // create an array with nodes
         var nodes_vis = new vis.DataSet({{ nodes|safe }});
@@ -107,11 +110,42 @@
             nodes: nodes_vis,
             edges: edges_vis
         };
-        var options = {solver: "repulsion"};
+
+        var options = {
+            physics:{
+                enabled: true,
+                stabilization: false,
+                solver: "repulsion",
+                barnesHut: {
+                    centralGravity: 0.6,
+                    springLength: 150,
+                    springConstant: 0.01,
+                },
+                repulsion:{
+                    centralGravity: 0.2,
+                    springLength: 200,
+                    springConstant: 0.01,
+                }
+            },
+
+            configure: {
+                    filter: function (option, path) {
+                        if (path.indexOf('physics') !== -1) {
+                            return true;
+                        }
+                        if (path.indexOf('smooth') !== -1 || option === 'smooth') {
+                            return true;
+                        }
+                        return false;
+                    },
+                    container: document.getElementById('config')
+                }
+        };
     
         // initialize network
         var network = new vis.Network(container, data, options);
     </script>
+
 </section>
 </article>
 {% endblock %}

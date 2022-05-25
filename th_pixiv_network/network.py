@@ -5,7 +5,7 @@ import numpy as np
 
 class Network():
     # グラフ初期化
-    def __init__(self, height='600px', width='600px') -> None:
+    def __init__(self, height='800px', width='800px') -> None:
         # self.weights = self.__get_weights()
         self.weights = np.load('./static/th_pixiv_network/weights.npy')
         self.height = height
@@ -16,16 +16,16 @@ class Network():
         self.chara_table = self.__load_chara_table()
 
         # ノード定義
-        # self.nodes = [dict() for i in range(len(self.weights))]
-        self.nodes = [dict() for i in range(3)]
+        self.nodes = [dict() for i in range(len(self.weights))]
+        # self.nodes = [dict() for i in range(3)]
         # ノード初期化
-        # self.init_nodes()
+        self.init_nodes()
 
         # エッジ定義
-        # self.edges = [dict() for i in range(len(self.weights)*len(self.weights))]
-        self.edges = [dict() for i in range(3*3)]
+        self.edges = [dict() for i in range(len(self.weights)*len(self.weights))]
+        # self.edges = [dict() for i in range(3*3)]
         # エッジ初期化
-        # self.init_edges(self.weights)
+        self.init_edges(self.weights)
 
         return
 
@@ -155,9 +155,10 @@ class Network():
             edge['from'] = weighted_edges[i][0]
             edge['to'] = weighted_edges[i][1]
             edge['width'] = weighted_edges[i][2]
+            edge['title'] = str(edge['width'])
             edge['arrows'] = 'to'
             edge['arrowStrikethrough'] = False
-            edge['title'] = str(edge['width'])
+            # edge['smooth'] = False
 
         # エッジの閾値設定
         self.set_threshold(self.threshold)

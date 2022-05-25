@@ -14,13 +14,7 @@ class NetworkView(generic.TemplateView):
 		
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		# context['form'] = ImageForm()
-		# context['pred'] = ''
-		# context['done'] = False
-		# context['image'] = None
-		# context['alert'] = None
 		self.network = Network()
-		import json
  
 		# context['nodes'] = self.network.nodes
 		# context['edges'] = self.network.edges
