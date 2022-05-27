@@ -4,7 +4,7 @@ from django import http
 from django.conf import settings
 import json
 
-# from .forms import ImageForm
+from .forms import NumberForm
 from .network import Network
 
 # Create your views here.
@@ -16,10 +16,10 @@ class NetworkView(generic.TemplateView):
 		context = super().get_context_data(**kwargs)
 		self.network = Network()
  
-		# context['nodes'] = self.network.nodes
-		# context['edges'] = self.network.edges
-		context['nodes']  = json.dumps(self.network.nodes)
+		context['form'] = NumberForm()
+		context['nodes'] = json.dumps(self.network.nodes)
 		context['edges'] = json.dumps(self.network.edges)
+		context['threshold'] = self.network.threshold
 
 		return context
 
@@ -60,3 +60,19 @@ class NetworkView(generic.TemplateView):
 		# その他のとき
 		else:
 			return ""
+
+	def post(self, request, *args, **kwargs):
+		form = NumberForm(request.POST, request.FILES)
+		if not form.is_valid():
+			context = self.get_context_data()
+			return render(request, self.template_name, context=context)
+
+		threshold = form.cleaned_data['threshold']
+
+		# set threshold
+		self.network.set_threshold(threshold)
+		self.kwargs['nodes'] = json.dumps(self.network.nodes)
+		self.kwargs['edges'] = json.dumps(self.network.edges)
+		self.kwargs['threshold'] = self.network.threshold
+
+		return render(request, self.template_name, context=self.kwargs)
