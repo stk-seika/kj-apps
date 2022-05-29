@@ -1,0 +1,165 @@
+{% extends 'kijin-apps/base.html' %}
+{% load static %}
+{% block header-head %}
+
+<title>東方キャラクターネットワーク図</title>
+<meta name="description" content="pixiv上に投稿された東方Projectのキャラクターが二人以上描かれたイラストを集計し、どのキャラクターが一緒に描かれているかをネットワークとして描画します。">
+<!-- <meta name="keywords"> -->
+{% endblock %}
+
+{% block header-tail %}
+<script type="text/javascript" src="{% static 'th_pixiv_network/vis-network.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'th_pixiv_network/css/style.css' %}">
+
+<script type="text/javascript">
+	function loadJSON(path, success, error) {
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				success(JSON.parse(xhr.responseText));
+			} else {
+				error(xhr);
+			}
+		}
+		};
+		xhr.open("GET", path, true);
+		xhr.send();
+	}
+</script>
+
+{% endblock %}
+
+{% block content %}
+<article>
+<section>
+	<h1>
+		東方Projectキャラクターネットワーク図
+	</h1>
+	<p>
+		(最終データ取得日: 2022-05-19)
+
+		<p>
+			pixiv上に投稿された東方Projectのキャラクターが二人以上描かれたイラストを集計し、どのキャラクターが一緒に描かれているかをネットワークとして描画します。
+			<!-- <a href="">(詳細)</a> -->
+		</p>
+		<p>
+			例として、霊夢のアイコンから魔理沙のアイコンに表示されている「博麗霊夢 to 霧雨魔理沙: 0.3165329354999126」という矢印は、霊夢を含むキャラクターが二人以上描かれたイラストのうち、魔理沙が描かれている割合が0.31...ということを表しています。
+			<br>
+			乱暴に言えば、霊夢のカプ絵のうち約3割は魔理沙。
+		</p>
+		<p>
+			キャラクターのかわいい画像はAI_Mebiusさんのドット絵を使用しています。(<a href="https://gridnote.blog.fc2.com/">AI_Mebiusさんのホームページ</a>)
+		</p>
+	</p>
+
+	<p>
+		<div id="network"></div>
+	</p>
+
+	<script type="text/javascript">
+		var nodes = new vis.DataSet();
+		var edges = new vis.DataSet();
+		var imported;
+
+		loadJSON("{% static 'th_pixiv_network/data.json' %}", setJsonData, function (err) {
+			console.log("error");
+		});
+
+		var data = {
+			nodes: nodes,
+			edges: edges,
+		};
+
+		var container = document.getElementById('network');
+
+		var options = {
+			physics:{
+			enabled: true,
+			solver: "repulsion",
+			// barnesHut: {
+			// 	centralGravity: 0.6,
+			// 	springLength: 150,
+			// 	springConstant: 0.01,
+			// },
+			repulsion:{
+				centralGravity: 0.2,
+				springLength: 200,
+				springConstant: 0.01,
+			},
+			}
+		};
+
+		var network = new vis.Network(container, data, options);
+
+		network.fit(); // zoom to fit
+		
+		/**
+		 * This function fills the DataSets. These DataSets will update the network.
+		 */
+		function setJsonData(jsonData) {
+			if (jsonData.nodes === undefined) {
+				jsonData = imported;
+			} else {
+				imported = jsonData;
+			}
+
+			nodes.clear();
+			edges.clear();
+
+			// add the data to the DataSets.
+			nodes.add(jsonData.nodes);
+			edges.add(jsonData.edges);
+		}
+
+		function updateThreshold() {
+			let edgeThreshold = document.getElementById("edgeThreshold").value;
+			let threshold = (10**edgeThreshold /100);
+			// console.log(threshold);
+			
+			let data = edges.map(
+				function(edge){
+					if (edge.width < threshold){
+						edge.hidden = true;
+						edge.physics = false;
+					} else{
+						edge.hidden = false;
+						edge.physics = true;
+					}
+					return edge;
+			});
+
+			edges.update(data);
+				
+			network.fit();
+		}
+	</script>
+
+	<p>
+		辺(矢印)の表示閾値を変更できます(0.01-1.0)。
+		<br>
+		小さくすると表示する辺の数が増えますが、処理が重くなります。
+	<form onsubmit="updateThreshold(); return false;">
+		<label for="edgeThreshold" class="form-label"></label>
+		<input type="range" class="form-range" min="0.00" max="2.0" step="0.01" id="edgeThreshold">
+		辺の表示閾値: <span id="value">0.1000</span>
+
+		<script type="text/javascript">
+			var elem = document.getElementById('edgeThreshold');
+			var target = document.getElementById('value');
+			var rangeValue = function (elem, target) {
+				return function(evt){
+					var val = elem.value;
+					target.innerHTML = (10**val /100).toFixed(4)
+				}
+			}
+			elem.addEventListener('input', rangeValue(elem, target));
+		</script>
+
+		<input type="button" value="適用" onclick="updateThreshold()" />
+	</form>
+	</p>
+
+</section>
+</article>
+{% endblock %}

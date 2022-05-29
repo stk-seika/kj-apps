@@ -18,10 +18,11 @@ from django.urls import path
 from django.urls.conf import include
 
 from . import index
+from . import th_pixiv_network
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', index.index, name="index"),
     path('classifier/', include('classifier.urls')),
-    path('th_pixiv_network/', include('th_pixiv_network.urls')),
+    path('th_pixiv_network/', th_pixiv_network.th_pixiv_network, name="th_pixiv_network"),
 ]

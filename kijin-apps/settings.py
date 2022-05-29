@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'classifier.apps.ClassifierConfig',
-    'th_pixiv_network.apps.ThPixivNetworkConfig',
 ]
 
 MIDDLEWARE = [
