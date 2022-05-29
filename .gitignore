@@ -11,9 +11,9 @@
 **/__pycache__/
 **/__notebook__.ipynb
 **/db.sqlite3
-#**/static
+./static/**/
 
-# secret_key.txt
+./kijin-apps/secret_key.txt
 
 # apps
 !classifier/static/classifier/model/model.pth
