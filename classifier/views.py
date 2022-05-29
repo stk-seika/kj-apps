@@ -89,7 +89,6 @@ class ClassifierView(generic.TemplateView):
 		self.kwargs['image'] = img
 
 		# Character name string
-		# table_file = 'classifier/static/classifier/chara_table.json'
 		table_file = settings.STATIC_ROOT + '/classifier/chara_table.json'
 		chara_table = dict()
 		with open(table_file, "r") as f:

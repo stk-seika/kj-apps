@@ -8,4 +8,3 @@ def size_limit_validator(value):
 
 class ImageForm(forms.Form):
     image = forms.ImageField(validators=[size_limit_validator])
-    # template_name = "classifier/classifier.html"

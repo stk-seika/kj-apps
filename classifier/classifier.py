@@ -9,9 +9,7 @@ from . import fill_image
 
 def init_model():
     # モデルpath
-    # model_path =.url('classifier/model/model.pth')
-    # model_path = 'classifier/static/classifier/model/model.pth' # テスト時
-    model_path = settings.STATIC_ROOT + '/classifier/model/model.pth' # デプロイ時
+    model_path = settings.STATIC_ROOT + '/classifier/model/model.pth'
     # デバイス
     # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # クラス数
@@ -40,10 +38,10 @@ def pred(image_path, model=None):
     # transform
     # 正方形256*256に変形
     transform = transforms.Compose([
-	transforms.Lambda(fill_image.fill_image_mean),
-	transforms.Resize((256, 256)),
-	# transforms.normalize([], [])
-	transforms.ToTensor()
+        transforms.Lambda(fill_image.fill_image_mean),
+        transforms.Resize((256, 256)),
+        # transforms.normalize([], []),
+        transforms.ToTensor(),
     ])
 
     image = transform(image_PIL)
