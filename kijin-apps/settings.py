@@ -157,6 +157,8 @@ if not DEBUG:
     db_from_env = dj_database_url.config()
     DATABASES['default'].update(db_from_env)
 
+    SECRET_KEY = os.environ['SECRET_KEY']
+
     # MIDDLEWARE += [
     #     'whitenoise.middleware.WhiteNoiseMiddleware',
     # ]
