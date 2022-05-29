@@ -1,6 +1,5 @@
 #network {
     width: 750px;
-    max-width: device-width;
     height: 750px;
     border: 1px solid lightgray;
 }
