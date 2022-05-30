@@ -5,6 +5,13 @@
         border: 1px solid lightgray;
     }
 }
+@media screen and (max-width:749px) {
+    #network {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+    }
+}
 @media screen and (max-width:600px) {
     #network {
         width: 480px;

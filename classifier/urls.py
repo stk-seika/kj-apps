@@ -7,5 +7,5 @@ app_name = 'classifier'
 
 urlpatterns = [
     path('', views.ClassifierView.as_view(), name='classifier'),
-# ]
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+# ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
