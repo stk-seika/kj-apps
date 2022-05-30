@@ -48,7 +48,7 @@
 			乱暴に言えば、霊夢のカプ絵のうち約3割は魔理沙。
 		</p>
 		<p>
-			キャラクターのかわいい画像はAI_Mebiusさんのドット絵を使用しています。(<a href="https://gridnote.blog.fc2.com/">AI_Mebiusさんのホームページ</a>)
+			キャラクターの画像はAI_Mebiusさんのドット絵を使用しています。(<a href="https://gridnote.blog.fc2.com/">AI_Mebiusさんのホームページ</a>)
 		</p>
 	</p>
 
@@ -75,17 +75,17 @@
 		var options = {
 			physics:{
 			enabled: true,
-			solver: "repulsion",
-			// barnesHut: {
-			// 	centralGravity: 0.6,
-			// 	springLength: 150,
-			// 	springConstant: 0.01,
-			// },
-			repulsion:{
-				centralGravity: 0.2,
-				springLength: 200,
+			solver: "barnesHut",
+			barnesHut: {
+				centralGravity: 0.6,
+				springLength: 150,
 				springConstant: 0.01,
 			},
+			// repulsion:{
+			// 	centralGravity: 0.2,
+			// 	springLength: 200,
+			// 	springConstant: 0.01,
+			// },
 			}
 		};
 
@@ -129,8 +129,6 @@
 			});
 
 			edges.update(data);
-				
-			network.fit();
 		}
 	</script>
 
