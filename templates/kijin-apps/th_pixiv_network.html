@@ -36,16 +36,16 @@
 		東方Projectキャラクターネットワーク図
 	</h1>
 	<p>
-		(最終データ取得日: 2022-05-19)
+		(最終データ取得日: 2022-06-10)
 
 		<p>
 			pixiv上に投稿された東方Projectのキャラクターが二人以上描かれたイラストを集計し、どのキャラクターが一緒に描かれているかをネットワークとして描画します。
 			<!-- <a href="">(詳細)</a> -->
 		</p>
 		<p>
-			例として、霊夢のアイコンから魔理沙のアイコンに表示されている「博麗霊夢 to 霧雨魔理沙: 0.3165329354999126」という矢印は、霊夢を含むキャラクターが二人以上描かれたイラストのうち、魔理沙が描かれている割合が0.31...ということを表しています。
+			例として、霊夢のアイコンから魔理沙のアイコンに表示されている「博麗霊夢 to 霧雨魔理沙: 0.5063060748163851」という矢印は、霊夢を含むキャラクターが二人以上描かれたイラストのうち、魔理沙が描かれている割合が0.50...ということを表しています。
 			<br>
-			乱暴に言えば、霊夢のカプ絵のうち約3割は魔理沙。
+			乱暴に言えば、霊夢のカプ絵のうち約5割は魔理沙。
 		</p>
 		<p>
 			キャラクターの画像はAI_Mebiusさんのドット絵を使用しています。(<a href="https://gridnote.blog.fc2.com/">AI_Mebiusさんのホームページ</a>)
@@ -84,7 +84,7 @@
 			barnesHut: {
 				centralGravity: 0.6,
 				springLength: 150,
-				springConstant: 0.01,
+				springConstant: 0.005,
 			},
 			// repulsion:{
 			// 	centralGravity: 0.2,
@@ -118,7 +118,7 @@
 
 		function updateThreshold() {
 			let edgeThreshold = document.getElementById("edgeThreshold").value;
-			let threshold = (10**edgeThreshold /100);
+			let threshold = ((10**edgeThreshold)/100);
 			// console.log(threshold);
 			
 			let data = edges.map(
@@ -143,8 +143,8 @@
 		小さくすると表示する辺の数が増えますが、処理が重くなります。
 	<form onsubmit="updateThreshold(); return false;">
 		<label for="edgeThreshold" class="form-label"></label>
-		<input type="range" class="form-range" min="0.00" max="2.0" step="0.01" id="edgeThreshold">
-		辺の表示閾値: <span id="value">0.1000</span>
+		<input type="range" class="form-range" min="0.00" max="2.0" step="0.01" value="1.301" id="edgeThreshold">
+		辺の表示閾値: <span id="value">0.2000</span>
 
 		<script type="text/javascript">
 			var elem = document.getElementById('edgeThreshold');
@@ -152,7 +152,7 @@
 			var rangeValue = function (elem, target) {
 				return function(evt){
 					var val = elem.value;
-					target.innerHTML = (10**val /100).toFixed(4)
+					target.innerHTML = ((10**val)/100).toFixed(4)
 				}
 			}
 			elem.addEventListener('input', rangeValue(elem, target));

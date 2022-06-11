@@ -3,6 +3,7 @@ import torch
 import torchvision
 from torchvision import transforms
 from PIL import Image
+import timm
 
 from . import fill_image
 
@@ -12,13 +13,13 @@ def init_model():
     model_path = settings.STATIC_ROOT + '/classifier/model/model.pth'
     # デバイス
     # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    # クラス数
-    num_classes = 190
+    # クラス数 = キャラ数 + 1
+    num_classes = 177
     # モデル
-    model = torchvision.models.regnet_y_400mf(pretrained=False, progress=False)
-    # 元モデルのfc層入力 -> ラベル数+1出力
-    num_ftrs = model.fc.in_features
-    model.fc = torch.nn.Linear(num_ftrs, num_classes)
+    model = timm.create_model('efficientnet_b0', pretrained=False, num_classes=num_classes)
+    # # 元モデルのfc層入力 -> ラベル数+1出力
+    # num_ftrs = model.fc.in_features
+    # model.fc = torch.nn.Linear(num_ftrs, num_classes)
     # デバイス適用
     # model = model.to(device)
 
