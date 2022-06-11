@@ -1,27 +1,23 @@
-@media screen and (min-width:750) {
+@media screen and (min-width:768px) {
     #network {
-        width: 750px;
-        height: 750px;
+        height: 768px;
         border: 1px solid lightgray;
     }
 }
-@media screen and (max-width:749px) {
+@media screen and (max-width:767px) {
     #network {
-        width: 600px;
-        height: 600px;
+        height: 576px;
         border: 1px solid lightgray;
     }
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:575px) {
     #network {
-        width: 480px;
         height: 480px;
         border: 1px solid lightgray;
     }
 }
 @media screen and (max-width: 480px) {
     #network {
-        width: 300px;
         height: 300px;
         border: 1px solid lightgray;
     }
