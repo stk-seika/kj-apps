@@ -1,5 +1,5 @@
 asgiref==3.5.2
-backports.zoneinfo==0.2.1
+# backports.zoneinfo==0.2.1
 dj-database-url==0.5.0
 Django==4.0.6
 django-heroku==0.3.1
@@ -13,6 +13,6 @@ timm==0.6.5
 torch==1.12.0+cpu
 --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
 torchvision==0.13.0+cpu
-typing_extensions==4.2.0
+typing_extensions==4.3.0
 wheel==0.37.1
 whitenoise==6.2.0
