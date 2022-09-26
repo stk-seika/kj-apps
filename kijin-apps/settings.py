@@ -143,22 +143,45 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Apply local settings or django-heroku
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-if not DEBUG:
-    import django_heroku
-    import dj_database_url
+# # Apply local settings or django-heroku
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
+# if not DEBUG:
+#     import django_heroku
+#     import dj_database_url
     
-    django_heroku.settings(locals())
+#     django_heroku.settings(locals())
     
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
+#     db_from_env = dj_database_url.config()
+#     DATABASES['default'].update(db_from_env)
 
+#     SECRET_KEY = os.environ['SECRET_KEY']
+
+#     # MIDDLEWARE += [
+#     #     'whitenoise.middleware.WhiteNoiseMiddleware',
+#     # ]
+    
+# Settings when deployed to render.com
+if 'RENDER' in os.environ:
+    import dj_database_url
+
+    # get the secret key from environment variable.
     SECRET_KEY = os.environ['SECRET_KEY']
 
-    # MIDDLEWARE += [
-    #     'whitenoise.middleware.WhiteNoiseMiddleware',
-    # ]
+    # add a hostname to ALLOWED_HOSTS.
+    RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+    if RENDER_EXTERNAL_HOSTNAME:
+        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+    # update the database by dj_database_url.
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
+    
+    # add WhiteNoise middleware to middleware.
+    WHITE_NOISE = 'whitenoise.middleware.WhiteNoiseMiddleware'
+    if WHITE_NOISE not in MIDDLEWARE:
+        MIDDLEWARE.append('WHITE_NOISE')
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
