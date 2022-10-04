@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'kijin-apps.urls'
+ROOT_URLCONF = 'kj-apps.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kijin-apps.wsgi.application'
+WSGI_APPLICATION = 'kj-apps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'kijin-apps',
+        'NAME': 'kj-apps',
         'USER': 'user',
         'PASSWORD': '',
         'HOST': 'host',

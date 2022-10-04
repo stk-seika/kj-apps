@@ -1,13 +1,13 @@
 services:
-  - name: kijin-apps
+  - name: kj-apps
     type: web
     env: python
-    repo: https://github.com/stk-seika/kijin-apps.git
+    repo: https://github.com/stk-seika/kj-apps.git
     branch: main
     plan: free
     region: singapore
     buildCommand: pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
-    startCommand: gunicorn kijin-apps.wsgi:application
+    startCommand: gunicorn kj-apps.wsgi:application
     envVars:
       - key: SECRET_KEY
         generateValue: true
