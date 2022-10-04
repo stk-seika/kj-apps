@@ -1,0 +1,15 @@
+services:
+  - name: kijin-apps
+    type: web
+    env: python
+    repo: https://github.com/stk-seika/kijin-apps.git
+    branch: main
+    plan: free
+    region: singapore
+    buildCommand: pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    startCommand: gunicorn kijin-apps.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.10.7

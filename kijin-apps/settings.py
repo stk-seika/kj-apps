@@ -151,9 +151,9 @@ CSRF_COOKIE_SECURE = True
 # if not DEBUG:
 #     import django_heroku
 #     import dj_database_url
-    
+
 #     django_heroku.settings(locals())
-    
+
 #     db_from_env = dj_database_url.config()
 #     DATABASES['default'].update(db_from_env)
 
@@ -162,11 +162,14 @@ CSRF_COOKIE_SECURE = True
 #     # MIDDLEWARE += [
 #     #     'whitenoise.middleware.WhiteNoiseMiddleware',
 #     # ]
-    
+
 # Settings when deployed to render.com
 if 'RENDER' in os.environ:
     import dj_database_url
 
+    # set DEBUG to false
+    DEBUG = False
+    
     # get the secret key from environment variable.
     SECRET_KEY = os.environ['SECRET_KEY']
 
@@ -178,10 +181,10 @@ if 'RENDER' in os.environ:
     # update the database by dj_database_url.
     db_from_env = dj_database_url.config()
     DATABASES['default'].update(db_from_env)
-    
-    # add WhiteNoise middleware to middleware.
+
+    # add WhiteNoise to middleware.
     WHITE_NOISE = 'whitenoise.middleware.WhiteNoiseMiddleware'
     if WHITE_NOISE not in MIDDLEWARE:
-        MIDDLEWARE.append('WHITE_NOISE')
+        MIDDLEWARE.append(WHITE_NOISE)
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
