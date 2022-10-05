@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     django_heroku.settings(locals())
 
 #     db_from_env = dj_database_url.config(
-#         default='postgres://user:@localhost/kj-apps'
+#         default='postgres://user:@localhost:5432/kj-apps'
 #     )
 #     DATABASES['default'] = db_from_env
 
@@ -165,8 +165,9 @@ if 'RENDER' in os.environ:
         ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
     # update the database by dj_database_url.
+    # postgres://USER:PASSWORD@HOST:PORT/NAME
     DATABASES['default'] = dj_database_url.config(
-        default='postgres://user:@localhost/kj-apps',
+        default='postgres://user:password123@localhost:5432/kj-apps',
         conn_max_age=600
     )
 
