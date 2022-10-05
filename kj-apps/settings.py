@@ -164,12 +164,12 @@ if 'RENDER' in os.environ:
     if RENDER_EXTERNAL_HOSTNAME:
         ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-    # update the database by dj_database_url.
-    # postgres://USER:PASSWORD@HOST:PORT/NAME
-    DATABASES['default'] = dj_database_url.config(
-        default='postgres://user:password123@localhost:5432/kj-apps',
-        conn_max_age=600
-    )
+    # # update the database by dj_database_url.
+    # # postgres://USER:PASSWORD@HOST:PORT/NAME
+    # DATABASES['default'] = dj_database_url.config(
+    #     default='postgres://user:password123@localhost:5432/kj-apps',
+    #     conn_max_age=600
+    # )
 
     # add WhiteNoise to middleware.
     WHITE_NOISE = 'whitenoise.middleware.WhiteNoiseMiddleware'

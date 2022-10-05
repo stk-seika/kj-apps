@@ -6,19 +6,12 @@ services:
     branch: main
     plan: free
     region: singapore
-    buildCommand: echo $RENDER_EXTERNAL_HOSTNAME && printenv && pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    buildCommand: pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
     startCommand: gunicorn kj-apps.wsgi:application
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: PYTHON_VERSION
         value: 3.10.7
-      - key: DATABASE_URL
-        fromDatabase:
-          name: kj-apps
-          property: connectionString
       - key: WEB_CONCURRENCY
         value: 4
-
-databases:
-  - name: kj-apps
