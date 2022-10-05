@@ -26,8 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
-
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -49,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'kj-apps.urls'
@@ -84,8 +82,7 @@ WSGI_APPLICATION = 'kj-apps.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kj-apps',
         'USER': 'user',
         'PASSWORD': '',
@@ -139,10 +136,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
 # # Apply local settings or django-heroku
 # try:
 #     from .local_settings import *
@@ -159,9 +152,10 @@ CSRF_COOKIE_SECURE = True
 
 #     SECRET_KEY = os.environ['SECRET_KEY']
 
-#     # MIDDLEWARE += [
-#     #     'whitenoise.middleware.WhiteNoiseMiddleware',
-#     # ]
+#     ALLOWED_HOSTS.append('.herokuapp.com')
+#     MIDDLEWARE.append(
+#         'whitenoise.middleware.WhiteNoiseMiddleware'
+#     )
 
 # Settings when deployed to render.com
 if 'RENDER' in os.environ:
@@ -188,3 +182,8 @@ if 'RENDER' in os.environ:
         MIDDLEWARE.append(WHITE_NOISE)
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
