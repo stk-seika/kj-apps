@@ -10,7 +10,7 @@ from . import fill_image
 
 def init_model():
     # モデルpath
-    model_path = settings.STATIC_ROOT + '/classifier/model/model.pth'
+    model_path = settings.STATIC_ROOT + 'classifier/model/model.pth'
     # デバイス
     # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # クラス数 = キャラ数 + 1
