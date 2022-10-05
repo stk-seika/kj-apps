@@ -167,7 +167,7 @@ if 'RENDER' in os.environ:
     # update the database by dj_database_url.
     # postgres://USER:PASSWORD@HOST:PORT/NAME
     DATABASES['default'] = dj_database_url.config(
-        default='postgres://user:password123@localhost:5432/kj-apps',
+        default='postgres://user:password123@localhost:5432/kj-db',
         conn_max_age=600
     )
 
