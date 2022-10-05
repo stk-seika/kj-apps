@@ -6,7 +6,7 @@ services:
     branch: main
     plan: free
     region: singapore
-    buildCommand: pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    buildCommand: printenv && pip3 install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
     startCommand: gunicorn kj-apps.wsgi:application
     envVars:
       - key: SECRET_KEY
@@ -17,6 +17,8 @@ services:
         fromDatabase:
           name: kj-apps
           property: connectionString
+      - key: WEB_CONCURRENCY
+        value: 4
 
 databases:
   - name: kj-apps

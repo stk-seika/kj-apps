@@ -26,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -73,21 +74,10 @@ WSGI_APPLICATION = 'kj-apps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kj-apps',
-        'USER': 'user',
-        'PASSWORD': '',
-        'HOST': 'host',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -147,8 +137,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #     django_heroku.settings(locals())
 
-#     db_from_env = dj_database_url.config()
-#     DATABASES['default'].update(db_from_env)
+#     db_from_env = dj_database_url.config(
+#         default='postgres://user:@localhost/kj-apps'
+#     )
+#     DATABASES['default'] = db_from_env
 
 #     SECRET_KEY = os.environ['SECRET_KEY']
 
@@ -173,8 +165,10 @@ if 'RENDER' in os.environ:
         ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
     # update the database by dj_database_url.
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
+    DATABASES['default'] = dj_database_url.config(
+        default='postgres://user:@localhost/kj-apps',
+        conn_max_age=600
+    )
 
     # add WhiteNoise to middleware.
     WHITE_NOISE = 'whitenoise.middleware.WhiteNoiseMiddleware'
