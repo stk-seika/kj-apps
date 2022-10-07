@@ -156,18 +156,17 @@ if 'RENDER' in os.environ:
     # set DEBUG to false
     DEBUG = False
     
-    # get the secret key from environment variable.
+    # get the secret key from env vars.
     SECRET_KEY = os.environ['SECRET_KEY']
 
-    # add a hostname to ALLOWED_HOSTS.
+    # add the hostname to ALLOWED_HOSTS.
     RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
     if RENDER_EXTERNAL_HOSTNAME:
         ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-    # update the database by dj_database_url.
-    # postgres://USER:PASSWORD@HOST:PORT/NAME
+    # set postgreSQL database.
     DATABASES['default'] = dj_database_url.config(
-        default='postgres://user:password123@localhost:5432/kj-db',
+        default='postgres://user:password123@localhost:5432/kj-db',  # postgres://USER:PASSWORD@HOST:PORT/NAME
         conn_max_age=600
     )
 
